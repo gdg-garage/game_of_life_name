@@ -63,24 +63,8 @@ class MainApp extends PolymerElement {
   }
 
   void _render(Set<game_of_life.Point> points) {
-    final width = _canvas.width;
-    final height = _canvas.height;
-    var img = _canvas.context2D.createImageData(width, height);
-
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        int index = ((y * width) + x) * 4;
-        index += 3; // A
-
-        if (points.contains(new game_of_life.Point(x, y))) {
-          img.data[index] = 255;
-        }
-      }
-    }
-
-    _canvas.context2D
-        ..clearRect(0, 0, _canvas.width, _canvas.height) // Clear canvas.
-        ..putImageData(img, 0, 0);
+    _canvas.context2D.clearRect(0, 0, _canvas.width, _canvas.height); // Clear canvas.
+    points.forEach((game_of_life.Point point) => _canvas.context2D.fillRect(point.x, point.y, _PIXEL_WIDTH, _PIXEL_HEIGHT));
   }
 
   // Optional lifecycle methods - uncomment if needed.
