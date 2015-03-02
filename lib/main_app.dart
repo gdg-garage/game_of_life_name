@@ -13,6 +13,7 @@ class MainApp extends PolymerElement {
   @observable String name = '';
   CanvasElement _canvas;
   static const _FONT_SIZE = 40; // Font size in px.
+  Set<game_of_life.Point> board;
 
   /// Constructor used to create instance of MainApp.
   MainApp.created() : super.created();
@@ -36,17 +37,7 @@ class MainApp extends PolymerElement {
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         int index = ((y * width) + x) * 4;
-//        if (img.data[index] != 0) {
-//          print("R: $x, $y");
-//        }
-//        if (img.data[index + 1] != 0) {
-//          print("G: $x, $y");
-//        }
-//        if (img.data[index + 2] != 0) {
-//          print("B: $x, $y");
-//        }
         if (img.data[index + 3] != 0) {
-//          print("A: $x, $y");
           result.add(new game_of_life.Point(x, y));
         }
       }
@@ -55,10 +46,14 @@ class MainApp extends PolymerElement {
     return result;
   }
 
+  void start() {
+    board = getPointsFromCanvas();
+    step();
+  }
+
   void step() {
-    var points = getPointsFromCanvas();
-    points = game_of_life.step(points);
-    _render(points);
+    board = game_of_life.step(board);
+    _render(board);
 
     new Timer(new Duration(milliseconds: 100), () {
       step();
