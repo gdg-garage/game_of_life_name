@@ -3,20 +3,21 @@
 
 import 'dart:html';
 
-import 'package:paper_elements/paper_input.dart';
 import 'package:polymer/polymer.dart';
 
 /// A Polymer `<main-app>` element.
 @CustomTag('main-app')
 class MainApp extends PolymerElement {
-  @observable String reversed = '';
+  @observable String name = '';
+  CanvasElement canvas;
 
   /// Constructor used to create instance of MainApp.
   MainApp.created() : super.created();
-
-  void reverseText(Event event, Object object, PaperInput target) {
-    reversed = target.value.split('').reversed.join('');
+  
+  void begin() {
+    canvas.context2D.fillText(name, 10, 10);
   }
+
 
   // Optional lifecycle methods - uncomment if needed.
 
@@ -36,9 +37,10 @@ class MainApp extends PolymerElement {
 //    super.attributeChanges(name, oldValue, newValue);
 //  }
 
-//  /// Called when main-app has been fully prepared (Shadow DOM created,
-//  /// property observers set up, event listeners attached).
-//  ready() {
-//    super.ready();
-//  }
+  /// Called when main-app has been fully prepared (Shadow DOM created,
+  /// property observers set up, event listeners attached).
+  ready() {
+    super.ready();
+    canvas = querySelector("#canvas");
+  }
 }
