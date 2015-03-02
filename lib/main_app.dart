@@ -41,6 +41,6 @@ class MainApp extends PolymerElement {
   /// property observers set up, event listeners attached).
   ready() {
     super.ready();
-    canvas = querySelector("#canvas");
+    canvas = this.shadowRoot.querySelector("#canvas");
   }
 }
