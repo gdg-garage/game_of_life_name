@@ -4,15 +4,15 @@
 import 'dart:html' hide Point;
 
 import 'package:polymer/polymer.dart';
-import 'game_of_life.dart';
+import 'game_of_life.dart' as game_of_life;
 
 /// A Polymer `<main-app>` element.
 @CustomTag('main-app')
 class MainApp extends PolymerElement {
   @observable String name = '';
   CanvasElement _canvas;
-  static const _FONT_SIZE = 20; // Font size in px.
-  
+  static const _FONT_SIZE = 40; // Font size in px.
+
   /// Constructor used to create instance of MainApp.
   MainApp.created() : super.created();
 
@@ -23,11 +23,11 @@ class MainApp extends PolymerElement {
         ..fillText(name.toUpperCase(), (_canvas.width/2)-((_FONT_SIZE/2)*(name.length/2)), (_canvas.height/2)-(_FONT_SIZE/2)); // Put text to canvas center by calculation from font size.
   }
 
-  Set<Point> getPointsFromCanvas() {
+  Set<game_of_life.Point> getPointsFromCanvas() {
     final width = _canvas.width;
     final height = _canvas.height;
 
-    Set<Point> result = new Set<Point>();
+    Set<game_of_life.Point> result = new Set<game_of_life.Point>();
 
     ImageData img =
         _canvas.context2D.getImageData(0, 0, width, height);
@@ -45,13 +45,40 @@ class MainApp extends PolymerElement {
 //          print("B: $x, $y");
 //        }
         if (img.data[index + 3] != 0) {
-          print("A: $x, $y");
-          result.add(new Point(x, y));
+//          print("A: $x, $y");
+          result.add(new game_of_life.Point(x, y));
         }
       }
     }
 
     return result;
+  }
+
+  void step() {
+    var points = getPointsFromCanvas();
+    points = game_of_life.step(points);
+    _render(points);
+  }
+
+  void _render(Set<game_of_life.Point> points) {
+    final width = _canvas.width;
+    final height = _canvas.height;
+    var img = _canvas.context2D.createImageData(width, height);
+
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        int index = ((y * width) + x) * 4;
+        index += 3; // A
+
+        if (points.contains(new game_of_life.Point(x, y))) {
+          img.data[index] = 255;
+        }
+      }
+    }
+
+    _canvas.context2D
+        ..clearRect(0, 0, _canvas.width, _canvas.height) // Clear canvas.
+        ..putImageData(img, 0, 0);
   }
 
   // Optional lifecycle methods - uncomment if needed.
