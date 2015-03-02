@@ -13,6 +13,8 @@ class MainApp extends PolymerElement {
   @observable String name = '';
   CanvasElement _canvas;
   static const _FONT_SIZE = 40; // Font size in px.
+  static const _PIXEL_WIDTH = 5;
+  static const _PIXEL_HEIGHT = 5;
   Set<game_of_life.Point> board;
 
   /// Constructor used to create instance of MainApp.
