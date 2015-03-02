@@ -13,7 +13,7 @@ class MainApp extends PolymerElement {
 
   /// Constructor used to create instance of MainApp.
   MainApp.created() : super.created();
-  
+
   void begin() {
     canvas.context2D.fillText(name, 10, 10);
   }
@@ -41,6 +41,6 @@ class MainApp extends PolymerElement {
   /// property observers set up, event listeners attached).
   ready() {
     super.ready();
-    canvas = this.shadowRoot.querySelector("#canvas");
+    canvas = shadowRoot.querySelector("#canvas");
   }
 }
