@@ -5,6 +5,7 @@ import 'dart:html' hide Point;
 
 import 'package:polymer/polymer.dart';
 import 'game_of_life.dart' as game_of_life;
+import 'dart:async';
 
 /// A Polymer `<main-app>` element.
 @CustomTag('main-app')
@@ -58,6 +59,10 @@ class MainApp extends PolymerElement {
     var points = getPointsFromCanvas();
     points = game_of_life.step(points);
     _render(points);
+
+    new Timer(new Duration(milliseconds: 100), () {
+      step();
+    });
   }
 
   void _render(Set<game_of_life.Point> points) {
