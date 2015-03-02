@@ -36,11 +36,23 @@ class MainApp extends PolymerElement {
     ImageData img =
         _canvas.context2D.getImageData(0, 0, width, height);
 
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        int index = ((y * width) + x) * 4;
-        if (img.data[index + 3] != 0) {
-          result.add(new game_of_life.Point(x, y));
+    final pixelsInBigPixel = _PIXEL_WIDTH * _PIXEL_HEIGHT;
+
+    for (int pointY = 0; pointY * _PIXEL_HEIGHT < height - 1; pointY++) {
+      for (int pointX = 0; pointX * _PIXEL_WIDTH < width - 1; pointX++) {
+        int count = 0;
+        for (int dy = 0; dy < _PIXEL_HEIGHT; dy++) {
+          for (int dx = 0; dx < _PIXEL_WIDTH; dx++) {
+            final int y = pointY * _PIXEL_HEIGHT + dy;
+            final int x = pointX * _PIXEL_WIDTH + dx;
+            final int index = ((y * width) + x) * 4;
+            if (img.data[index + 3] != 0) {
+              count++;
+            }
+          }
+        }
+        if (count > pixelsInBigPixel ~/ 2) {
+          result.add(new game_of_life.Point(pointX, pointY));
         }
       }
     }
