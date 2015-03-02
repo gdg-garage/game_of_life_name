@@ -1,0 +1,13 @@
+name: game_of_life_functional
+version: 0.0.1
+description: A starter template for a polymer.dart web app.
+environment:
+  sdk: '>=1.0.0 <2.0.0'
+dependencies:
+  browser: any
+  paper_elements: '>=0.6.1 <0.7.0'
+  polymer: '>=0.15.4 <0.16.0'
+  vector_math: any
+transformers:
+- polymer:
+    entry_points: web/index.html
