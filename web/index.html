@@ -20,19 +20,25 @@
   <!-- Tile icon for Win8 (144x144 + tile color) -->
   <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
   <meta name="msapplication-TileColor" content="#3372DF">
+  
+  <!-- Import core-element's definition -->
+  <link rel="import" href="../../packages/core_elements/core_header_panel.html">
+  <link rel="import" href="../../packages/core_elements/core_toolbar.html">
 
-  <!-- example of using a paper element -->
-  <link rel="import" href="packages/paper_elements/roboto.html">
-
-  <!-- example of your own custom element -->
+  <!-- Import of your own custom element -->
   <link rel="import" href="packages/game_of_life_functional/main_app.html">
 
-  <link rel="stylesheet" href="styles.css">
+  <link type="text/css" rel="stylesheet" href="styles.css">
 </head>
 
-<body unresolved>
+<body fullbleed layout vertical unresolved>
 
-  <main-app></main-app>
+  <core-header-panel mode="standart" flex>
+    <core-toolbar>
+      <h1>Game of Life with Name</h1>
+    </core-toolbar>
+    <div class="content" layout horizontal center-justified fit><main-app></main-app></div>
+  </core-header-panel>
 
   <script type="application/dart">export 'package:polymer/init.dart';</script>
 </body>

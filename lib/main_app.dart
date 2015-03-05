@@ -25,6 +25,7 @@ class MainApp extends PolymerElement {
         ..fillText(name.toUpperCase(), (_canvas.width/2)-((_FONT_SIZE/2)*(name.length/2)), (_canvas.height/2)-(_FONT_SIZE/2)); // Put text to canvas center by calculation from font size.
   }
 
+  // TODO: Simplify and optimize this method.
   Set<Cell> getPointsFromCanvas() {
     final width = _canvas.width;
     final height = _canvas.height;
