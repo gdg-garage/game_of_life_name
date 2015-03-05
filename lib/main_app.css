@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+canvas {
+  margin-top: 2em;
+  border: 1px solid red;
+}
+paper-button {
+  background: green;
+  color: white;
+}

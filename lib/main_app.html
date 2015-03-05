@@ -1,8 +1,3 @@
-<!--
-  Copyright (c) 2015, <your name>. All rights reserved. Use of this source code
-  is governed by a BSD-style license that can be found in the LICENSE file.
--->
-
 <!-- import polymer-element's definition -->
 <link rel="import" href="../../packages/polymer/polymer.html">
 
@@ -11,24 +6,9 @@
 
 <polymer-element name="main-app">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-
-      canvas {
-        margin-top: 2em;
-        border: 1px solid red;
-      }
-
-      paper-button {
-        background: green;
-        color: white;
-      }
-    </style>
+    <link type="text/css" rel="stylesheet" href="main_app.css">
 
     <paper-input label="Jméno" value="{{name}}"></paper-input>
-
     <paper-button on-click="{{begin}}">Začni</paper-button>
     <br>
     <canvas id="canvas" width="600" height="400"></canvas>

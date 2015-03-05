@@ -1,15 +1,16 @@
 library game_of_life;
 
-class Point {
+/// Cell definition for Game of Life.  
+class Cell {
   final int x, y;
-  const Point(this.x, this.y);
+  const Cell(this.x, this.y);
   operator==(other) => hashCode == other.hashCode;
   int get hashCode => (x << 8) + y;
-  Point offset(int dx, int dy) => new Point(x + dx, y + dy);
+  Cell offset(int dx, int dy) => new Cell(x + dx, y + dy);
   toString() => "($x, $y)";
 }
 
-Set<Point> _neighs(Point p) {
+Set<Cell> _neighs(Cell p) {
   const dl = const [-1, 0, 1];
   return dl.expand((dx) => dl.map((dy) => p.offset(dx, dy)))
       .where((np) => np != p)
@@ -19,30 +20,18 @@ Set<Point> _neighs(Point p) {
 bool _shouldBeAlive(int nc, bool isAlive) =>
     nc == 3 || (nc == 2 && isAlive);
 
-Set<Point> step(Set<Point> board) {
-  var next = new Set<Point>();
+/// One step in Game of Life.
+Set<Cell> step(Set<Cell> board) {
+  var next = new Set<Cell>();
   board
       .map((p) => _neighs(p))
       .expand((p) => p)
-      .fold({}, (Map<Point,int> map, p) {
+      .fold({}, (Map<Cell,int> map, p) {
         map[p] = map.putIfAbsent(p, () => 0) + 1;
         return map;
       })
-      .forEach((Point p, int frq) {
+      .forEach((Cell p, int frq) {
         if (_shouldBeAlive(frq, board.contains(p))) next.add(p);
       });
   return next;
 }
-
-
-//main() {
-//  var glider = [[1, 3], [2, 3], [3, 3], [3, 2], [2, 1]];
-//  var board = new Set.from(glider.map((e) => new Point(e[0], e[1])));
-//  board = step(board);
-//  board = step(board);
-//  board = step(board);
-//  board = step(board);
-//  board = step(board);
-//  board = step(board);
-//  print(board);
-//}
