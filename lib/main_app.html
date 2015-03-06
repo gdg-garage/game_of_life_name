@@ -1,20 +1,61 @@
 <!-- Import polymer-element's definition -->
 <link rel="import" href="../../packages/polymer/polymer.html">
 
+<!-- Import core-element's definition -->
+<link rel="import" href="../../packages/core_elements/core_icons.html">
+<link rel="import" href="../../packages/core_elements/core_tooltip.html">
+<link rel="import" href="../../packages/core_elements/core_item.html">
+
 <!-- Import paper-element's definition -->
 <link rel="import" href="../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../packages/paper_elements/paper_fab.html">
+<link rel="import" href="../../packages/paper_elements/paper_toast.html">
 <link rel="import" href="../../packages/paper_elements/paper_button.html">
+<link rel="import" href="../../packages/paper_elements/paper_slider.html">
+<link rel="import" href="../../packages/paper_elements/paper_action_dialog.html">
+<link rel="import" href="../../packages/paper_elements/paper_icon_button.html">
 
 <polymer-element name="main-app">
   <template>
     <link type="text/css" rel="stylesheet" href="main_app.css">
 
-    <paper-input label="Jméno" value="{{name}}"></paper-input>
-    <paper-button on-click="{{begin}}">Začni</paper-button>
-    <br>
-    <canvas id="canvas" width="600" height="400"></canvas>
-    <br>
-    <paper-button on-click="{{start}}">Start</paper-button>
+    <div id="menu" vertical layout center>
+      <paper-input id="name" label="Name" value="{{name}}" on-keyup="{{validateName}}" on-keypress="{{enter}}"></paper-input>
+      <paper-input id="age" label="Age" value="{{age}}" on-keyup="{{validateAge}}" on-keypress="{{enter}}"></paper-input>
+      <span>Font size:</span>
+      <paper-slider id="font-size" editable max="200" min="20" step="1" value="{{fontSize}}" role="slider"></paper-slider>
+      <span>Pixel width:</span>
+      <paper-slider id="pixel-width" pin snaps max="10" min="1" step="1" value="{{pixelWidth}}" role="slider"></paper-slider>
+      <span>Pixel height:</span>
+      <paper-slider id="pixel-height" pin snaps max="10" min="1" step="1" value="{{pixelHeight}}" role="slider"></paper-slider>
+      <core-tooltip label="Start"><paper-fab mini icon="done" role="button" on-click="{{start}}"></paper-fab></core-tooltip>
+    </div>
+    
+    <canvas id="canvas"></canvas>
+
+    <div horizontal layout center-justified>
+      <paper-shadow id="aging" z="2">
+        <core-item icon="schedule" label="Age: {{aging}}"></core-item>
+      </paper-shadow>
+    </div>
+    
+    <div id="control" horizontal layout center-justified>
+      <paper-button on-click="{{next}}">
+        Next year<core-icon icon="chevron-right"></core-icon>
+      </paper-button>
+      <paper-button on-click="{{reset}}">
+        <core-icon icon="autorenew"></core-icon>Reset
+      </paper-button>
+    </div>
+    
+    <paper-action-dialog id="dialog" heading="Congratulation!" transition="core-transition-center">
+      <paper-icon-button horizontal layout reverse icon="close" title="Close" on-click="{{closeDialog}}"></paper-icon-button>
+      <p>This is the image of your life right now.</p><br>
+      <img id="canvasImg" title="Right click to save me!">
+    </paper-action-dialog>
+    
+    <!-- TODO: Find out why swipeDisabled and autoCloseDisabled abilities don't work. -->
+    <paper-toast id="toast"></paper-toast>
   </template>
   <script type="application/dart" src="main_app.dart"></script>
 </polymer-element>

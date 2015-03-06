@@ -1,11 +1,67 @@
+/* main-app element stylesheet */
 :host {
   display: block;
 }
-canvas {
-  margin-top: 2em;
-  border: 1px solid red;
+paper-input {
+  color: red;
+  width: 50%;
 }
-paper-button {
+paper-input /deep/ .focused-underline {
+  background: red;
+}
+paper-input /deep/ .cursor {
   background: green;
+}
+#menu span {
+  color: #808080;
+  margin-top: 0.5em;
+  margin-bottom: -10px;
+}
+paper-slider {
+  width: 50%;
+}
+paper-slider /deep/ paper-input {
+  color: red;
+}
+paper-slider /deep/ paper-input /deep/ .focused-underline {
+  background: red;
+}
+paper-slider::shadow #sliderBar::shadow #activeProgress {
+  background: green;
+}
+paper-slider::shadow #sliderKnobInner {
+  background: green;
+}
+paper-slider::shadow #sliderKnobInner::before {
+  background: red;
+}
+paper-fab {
+  background: green;
+  margin-top: 1em;
+}
+canvas {
+  width: 100%;
+  margin-top: 1em;
+  border: 1px solid red;
+  display: none;
+}
+#aging {
+  font-size: 18pt;
   color: white;
+  background: #E03737;
+  margin-top: 1em;
+  padding: 0.5em;
+  padding-right: 1em;
+  display: none;
+}
+#control {
+  margin-top: 2em;
+  color: white;
+  display: none;
+}
+#control paper-button:first-child {
+  background: green;
+}
+#control paper-button:last-child {
+  background: red;
 }

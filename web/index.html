@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="scaffolded-by" content="https://github.com/google/stagehand">
   <title>Game of Life with Name</title>
 
   <!-- Add to homescreen for Chrome on Android -->
@@ -24,6 +23,9 @@
   <!-- Import core-element's definition -->
   <link rel="import" href="../../packages/core_elements/core_header_panel.html">
   <link rel="import" href="../../packages/core_elements/core_toolbar.html">
+  
+  <!-- Import paper-element's definition -->
+  <link rel="import" href="../../packages/paper_elements/paper_shadow.html">
 
   <!-- Import of your own custom element -->
   <link rel="import" href="packages/game_of_life_functional/main_app.html">
@@ -33,12 +35,15 @@
 
 <body fullbleed layout vertical unresolved>
 
-  <core-header-panel mode="standart" flex>
-    <core-toolbar>
-      <h1>Game of Life with Name</h1>
-    </core-toolbar>
+  <core-header-panel mode="standart" shadow flex>
+    <h1 class="core-header">Game of Life with Name</h1>
     <div class="content" layout horizontal center-justified fit><main-app></main-app></div>
   </core-header-panel>
+  <div id="riseShadow"></div>
+  <footer>
+    <div>Code available on <a class="link" href="https://github.com/gdg-garage/game_of_life_name" target="_blank">GitHub</a></div>
+    <div>Created by <a class="link" href="https://sites.google.com/site/garagepragueone/" target="_blank">GDG Garage Prague One</a></div>
+  </footer>
 
   <script type="application/dart">export 'package:polymer/init.dart';</script>
 </body>
