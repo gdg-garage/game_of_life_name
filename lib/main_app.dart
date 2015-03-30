@@ -137,7 +137,7 @@ class MainApp extends PolymerElement {
 
   // TODO: Implement also method previous.
   void next() {
-    _board = step(_board);
+    _board = step(_board, gameOfLife);
     _render(_board, circle:true);
 
     _counter--;
