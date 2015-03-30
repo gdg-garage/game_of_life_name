@@ -121,7 +121,7 @@ class MainApp extends PolymerElement {
             final int y = pointY * pixelHeight + dy;
             final int x = pointX * pixelWidth + dx;
             final int index = ((y * width) + x) * 4;
-            if (img.data[index + 3] != 0) {
+            if (img.data.length >= index + 3 && img.data[index + 3] != 0) {
               count++;
             }
           }
