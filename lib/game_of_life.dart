@@ -17,11 +17,14 @@ Set<Cell> _neighs(Cell p) {
       .toSet();
 }
 
-bool _shouldBeAlive(int nc, bool isAlive) =>
+/// Definition of alive function.
+typedef bool AliveFunction(int neighborCount, bool isAlive);
+
+bool gameOfLife(int nc, bool isAlive) =>
     nc == 3 || (nc == 2 && isAlive);
 
 /// One step in Game of Life.
-Set<Cell> step(Set<Cell> board) {
+Set<Cell> step(Set<Cell> board, AliveFunction shouldBeAlive) {
   var next = new Set<Cell>();
   board
       .map((p) => _neighs(p))
@@ -31,7 +34,7 @@ Set<Cell> step(Set<Cell> board) {
         return map;
       })
       .forEach((Cell p, int frq) {
-        if (_shouldBeAlive(frq, board.contains(p))) next.add(p);
+        if (shouldBeAlive(frq, board.contains(p))) next.add(p);
       });
   return next;
 }
