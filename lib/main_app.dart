@@ -186,6 +186,7 @@ class MainApp extends PolymerElement {
     _context = _canvas.context2D;
     // TODO: Find out why method focus doesn't work. Also in reset method.
     (shadowRoot.querySelector("#name") as PaperInput).focus();
+    start(); // Automatic start of the program; TODO: Remove when finished testing.
   }
 
   void _resetValues() {
