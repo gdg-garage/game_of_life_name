@@ -103,10 +103,19 @@ class MainApp extends PolymerElement {
           ..fillStyle = _COLOR
           ..fillText(name.toUpperCase(), (_canvas.width / 2) - ((_FONT_SIZE / 2) * (name.length / 2)), (_canvas.height / 2) - (_FONT_SIZE / 2)); // Put text to canvas center by calculation from font size.
       _boardGameOfLife = _getPointsFromCanvas();
+      _printName(name, _context);
       new Timer(new Duration(milliseconds: _INIT_TIME), () {
         next();
       });
     }
+  }
+
+  // Put text to canvas center by calculation from font size.
+  void _printName(String name, CanvasRenderingContext2D context) {
+    context
+      ..font = fontSize.toString() + "px Monospace"
+      ..fillStyle = _COLOR
+      ..fillText(name.toUpperCase(), (_canvas.width / 2) - ((_FONT_SIZE / 2) * (name.length / 2)), (_canvas.height / 2) - (_FONT_SIZE / 2));
   }
 
   // TODO: Simplify and optimize this method.
@@ -186,6 +195,8 @@ class MainApp extends PolymerElement {
         _context.fill();
       });
     } else points.forEach((Cell point) => _context.fillRect(point.x * pixelWidth, point.y * pixelHeight, pixelWidth, pixelHeight));
+
+    _printName(name, _context);
   }
 
   /// Called when main-app has been fully prepared (Shadow DOM created,
