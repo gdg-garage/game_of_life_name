@@ -27,6 +27,11 @@ bool gameOfLifeMaze(int nc, bool isAlive) =>
     (nc == 1 || nc == 2 || nc == 3 || nc == 4 || nc == 5) &&
     isAlive || (nc == 3);
 
+bool gameOfLifeMazectric(int nc, bool isAlive) =>
+    (nc == 1 || nc == 2 || nc == 3 || nc == 4) && isAlive || (nc == 3);
+
+
+
 /// One step in Game of Life.
 Set<Cell> step(Set<Cell> board, AliveFunction shouldBeAlive) {
   var next = new Set<Cell>();

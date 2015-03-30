@@ -154,7 +154,7 @@ class MainApp extends PolymerElement {
   // TODO: Implement also method previous.
   void next() {
     _boardMaze = step(_boardMaze, gameOfLifeMaze);
-    _boardGameOfLife = step(_boardGameOfLife, gameOfLifeMaze);
+    _boardGameOfLife = step(_boardGameOfLife, gameOfLifeMazectric);
     _clearCanvas();
     _render(_boardMaze, circle: true, color: "rgba(150, 150, 150, 0.5)", radius: 10);
     _render(_boardGameOfLife, circle: true, color: "rgba(0, 0, 0, 0.5)", radius: 3);
