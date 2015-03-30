@@ -6,6 +6,7 @@ import 'package:paper_elements/paper_input.dart';
 import 'package:paper_elements/paper_action_dialog.dart';
 import 'game_of_life.dart';
 import 'dart:async';
+import 'dart:math';
 
 // Helper class
 class Message {
@@ -30,11 +31,13 @@ class MainApp extends PolymerElement {
   static const _PIXEL_SIZE = 10; // Default pixel width and height in px.
   static const _INIT_TIME = 1000; // Init time for displaying name in ms.
   static const _STEP_TIME = 100; // Time between two steps in ms.
+  static const _COLOR = "red";
+  static const _RADIUS = 5;
   static final List _messages = [new Message("Name can not be empty!", "red"), new Message("Age must be a whole number!", "red")];
 
   // Bind variables
-  @published String name = "";
-  @published String age = ""; // TODO: Find out better way to input directly integer or validate more effectively.
+  @published String name = "Test Name";
+  @published String age = "1000"; // TODO: Find out better way to input directly integer or validate more effectively.
   @published int fontSize = _FONT_SIZE;
   @published int pixelWidth = _PIXEL_SIZE;
   @published int pixelHeight = _PIXEL_SIZE;
@@ -90,6 +93,7 @@ class MainApp extends PolymerElement {
       _clearCanvas();
       _context
           ..font = fontSize.toString() + "px Monospace"
+          ..fillStyle = _COLOR
           ..fillText(name.toUpperCase(), (_canvas.width / 2) - ((_FONT_SIZE / 2) * (name.length / 2)), (_canvas.height / 2) - (_FONT_SIZE / 2)); // Put text to canvas center by calculation from font size.
       _board = _getPointsFromCanvas();
       new Timer(new Duration(milliseconds: _INIT_TIME), () {
@@ -134,7 +138,7 @@ class MainApp extends PolymerElement {
   // TODO: Implement also method previous.
   void next() {
     _board = step(_board);
-    _render(_board);
+    _render(_board, circle:true);
 
     _counter--;
     aging = (int.parse(age) - _counter).toString();
@@ -162,9 +166,16 @@ class MainApp extends PolymerElement {
     _context.canvas.height = window.innerHeight;
   }
 
-  void _render(Set<Cell> points) {
+  void _render(Set<Cell> points, {bool circle:false}) {
     _clearCanvas();
-    points.forEach((Cell point) => _context.fillRect(point.x * pixelWidth, point.y * pixelHeight, pixelWidth, pixelHeight));
+    _context.fillStyle = _COLOR;
+    if(circle) { 
+      points.forEach((Cell point) {
+        _context.beginPath();
+        _context.arc(point.x * pixelWidth + pixelWidth ~/ 2, point.y * pixelHeight + pixelHeight ~/ 2, _RADIUS, 0, 2 * PI);
+        _context.fill();
+      });
+    } else points.forEach((Cell point) => _context.fillRect(point.x * pixelWidth, point.y * pixelHeight, pixelWidth, pixelHeight));
   }
 
   /// Called when main-app has been fully prepared (Shadow DOM created,
