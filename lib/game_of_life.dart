@@ -1,6 +1,6 @@
 library game_of_life;
 
-/// Cell definition for Game of Life.  
+/// Cell definition for Game of Life.
 class Cell {
   final int x, y;
   const Cell(this.x, this.y);
@@ -22,6 +22,10 @@ typedef bool AliveFunction(int neighborCount, bool isAlive);
 
 bool gameOfLife(int nc, bool isAlive) =>
     nc == 3 || (nc == 2 && isAlive);
+
+bool gameOfLifeMaze(int nc, bool isAlive) =>
+    (nc == 1 || nc == 2 || nc == 3 || nc == 4 || nc == 5) &&
+    isAlive || (nc == 3);
 
 /// One step in Game of Life.
 Set<Cell> step(Set<Cell> board, AliveFunction shouldBeAlive) {

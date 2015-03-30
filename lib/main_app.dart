@@ -137,7 +137,7 @@ class MainApp extends PolymerElement {
 
   // TODO: Implement also method previous.
   void next() {
-    _board = step(_board, gameOfLife);
+    _board = step(_board, gameOfLifeMaze);
     _render(_board, circle:true);
 
     _counter--;
@@ -169,7 +169,7 @@ class MainApp extends PolymerElement {
   void _render(Set<Cell> points, {bool circle:false}) {
     _clearCanvas();
     _context.fillStyle = _COLOR;
-    if(circle) { 
+    if(circle) {
       points.forEach((Cell point) {
         _context.beginPath();
         _context.arc(point.x * pixelWidth + pixelWidth ~/ 2, point.y * pixelHeight + pixelHeight ~/ 2, _RADIUS, 0, 2 * PI);
