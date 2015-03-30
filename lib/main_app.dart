@@ -31,8 +31,8 @@ class MainApp extends PolymerElement {
   static const _PIXEL_SIZE = 10; // Default pixel width and height in px.
   static const _INIT_TIME = 1000; // Init time for displaying name in ms.
   static const _STEP_TIME = 100; // Time between two steps in ms.
-  static const _COLOR = "red";
-  static const _RADIUS = 5;
+  static const _COLOR = "rgba(255, 0, 0, 0.5)";
+  static const _RADIUS = 3;
   static final List _messages = [new Message("Name can not be empty!", "red"), new Message("Age must be a whole number!", "red")];
 
   // Bind variables
@@ -44,7 +44,8 @@ class MainApp extends PolymerElement {
   @published String aging = "";
 
   // Class variables
-  Set<Cell> _board;
+  Set<Cell> _boardMaze;
+  Set<Cell> _boardGameOfLife;
   CanvasElement _canvas;
   CanvasRenderingContext2D _context;
   int _counter;
@@ -92,10 +93,16 @@ class MainApp extends PolymerElement {
       aging = 0.toString();
       _clearCanvas();
       _context
-          ..font = fontSize.toString() + "px Monospace"
+          ..font = "${fontSize.round()}px Monospace"
           ..fillStyle = _COLOR
           ..fillText(name.toUpperCase(), (_canvas.width / 2) - ((_FONT_SIZE / 2) * (name.length / 2)), (_canvas.height / 2) - (_FONT_SIZE / 2)); // Put text to canvas center by calculation from font size.
-      _board = _getPointsFromCanvas();
+      _boardMaze = _getPointsFromCanvas();
+      _clearCanvas();
+      _context
+          ..font = "${(fontSize * 1.2).round()}px Monospace"
+          ..fillStyle = _COLOR
+          ..fillText(name.toUpperCase(), (_canvas.width / 2) - ((_FONT_SIZE / 2) * (name.length / 2)), (_canvas.height / 2) - (_FONT_SIZE / 2)); // Put text to canvas center by calculation from font size.
+      _boardGameOfLife = _getPointsFromCanvas();
       new Timer(new Duration(milliseconds: _INIT_TIME), () {
         next();
       });
@@ -137,8 +144,11 @@ class MainApp extends PolymerElement {
 
   // TODO: Implement also method previous.
   void next() {
-    _board = step(_board, gameOfLifeMaze);
-    _render(_board, circle:true);
+    _boardMaze = step(_boardMaze, gameOfLifeMaze);
+    _boardGameOfLife = step(_boardGameOfLife, gameOfLifeMaze);
+    _clearCanvas();
+    _render(_boardMaze, circle: true, color: "rgba(150, 150, 150, 0.5)", radius: 10);
+    _render(_boardGameOfLife, circle: true, color: "rgba(0, 0, 0, 0.5)", radius: 3);
 
     _counter--;
     aging = (int.parse(age) - _counter).toString();
@@ -166,13 +176,13 @@ class MainApp extends PolymerElement {
     _context.canvas.height = window.innerHeight;
   }
 
-  void _render(Set<Cell> points, {bool circle:false}) {
-    _clearCanvas();
-    _context.fillStyle = _COLOR;
+  void _render(Set<Cell> points, {bool circle: false,
+        color: _COLOR, int radius: _RADIUS}) {
+    _context.fillStyle = color;
     if(circle) {
       points.forEach((Cell point) {
         _context.beginPath();
-        _context.arc(point.x * pixelWidth + pixelWidth ~/ 2, point.y * pixelHeight + pixelHeight ~/ 2, _RADIUS, 0, 2 * PI);
+        _context.arc(point.x * pixelWidth + pixelWidth ~/ 2, point.y * pixelHeight + pixelHeight ~/ 2, radius, 0, 2 * PI);
         _context.fill();
       });
     } else points.forEach((Cell point) => _context.fillRect(point.x * pixelWidth, point.y * pixelHeight, pixelWidth, pixelHeight));
